@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
     `maven-publish`
 }
 
@@ -21,9 +19,19 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     
+    watchosArm32()
+    watchosArm64()
+    watchosSimulatorArm64()
+    
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.coroutines.core)
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.androidx.core.ktx)
+            }
         }
     }
 }
