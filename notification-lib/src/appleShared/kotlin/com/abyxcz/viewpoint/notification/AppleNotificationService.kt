@@ -1,3 +1,5 @@
+@file:OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+@file:Suppress("DIFFERENT_BIT_WIDTH_NON_EXPECTED_DECLARATION")
 package com.abyxcz.viewpoint.notification
 
 import platform.UserNotifications.UNAuthorizationOptionAlert
@@ -13,6 +15,7 @@ import platform.UserNotifications.UNTimeIntervalNotificationTrigger
 import platform.UserNotifications.UNUserNotificationCenter
 import platform.UserNotifications.UNUserNotificationCenterDelegateProtocol
 import platform.darwin.NSObject
+import kotlinx.cinterop.convert
 
 class AppleNotificationService : NotificationService {
     private val notificationCenter = UNUserNotificationCenter.currentNotificationCenter()
@@ -23,9 +26,10 @@ class AppleNotificationService : NotificationService {
         requestAuthorization()
     }
 
+    @Suppress("DIFFERENT_BIT_WIDTH_NON_EXPECTED_DECLARATION")
     private fun requestAuthorization() {
         notificationCenter.requestAuthorizationWithOptions(
-            UNAuthorizationOptionAlert or UNAuthorizationOptionSound or UNAuthorizationOptionBadge,
+            (UNAuthorizationOptionAlert or UNAuthorizationOptionSound or UNAuthorizationOptionBadge).convert(),
         ) { granted, error ->
             if (granted) {
                 println("Notification permission granted")
@@ -62,12 +66,13 @@ class AppleNotificationService : NotificationService {
     }
 
     private class NotificationDelegate : NSObject(), UNUserNotificationCenterDelegateProtocol {
+        @Suppress("DIFFERENT_BIT_WIDTH_NON_EXPECTED_DECLARATION")
         override fun userNotificationCenter(
             center: UNUserNotificationCenter,
             willPresentNotification: UNNotification,
             withCompletionHandler: (UNNotificationPresentationOptions) -> Unit,
         ) {
-            withCompletionHandler(UNNotificationPresentationOptionAlert or UNNotificationPresentationOptionSound)
+            withCompletionHandler((UNNotificationPresentationOptionAlert or UNNotificationPresentationOptionSound).convert())
         }
     }
 }
