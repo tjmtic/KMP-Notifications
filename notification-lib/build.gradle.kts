@@ -15,14 +15,20 @@ kotlin {
         }
     }
     
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-    jvm()
+    val appleSharedDir = "src/appleShared/kotlin"
     
-    watchosArm32()
-    watchosArm64()
-    watchosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+        watchosArm32(),
+        watchosArm64(),
+        watchosSimulatorArm64()
+    ).forEach { target ->
+        target.compilations.getByName("main").defaultSourceSet.kotlin.srcDir(appleSharedDir)
+    }
+    
+    jvm()
     
     sourceSets {
         commonMain.dependencies {
