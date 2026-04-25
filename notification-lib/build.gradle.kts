@@ -59,7 +59,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/tjmtic/KMP-NotificationLib")
+            url = uri("https://maven.pkg.github.com/tjmtic/KMP-Notifications")
             credentials {
                 username = System.getenv("GITHUB_ACTOR") ?: project.findProperty("gpr.user") as String? ?: "USER_NOT_SET"
                 password = System.getenv("GITHUB_TOKEN") ?: System.getenv("GPR_READ_TOKEN") ?: project.findProperty("gpr.key") as String? ?: "TOKEN_NOT_SET"
