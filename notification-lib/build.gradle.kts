@@ -47,4 +47,23 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/tjmtic/KMP-NotificationLib")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR") ?: project.findProperty("gpr.user") as String? ?: "USER_NOT_SET"
+                password = System.getenv("GITHUB_TOKEN") ?: System.getenv("GPR_READ_TOKEN") ?: project.findProperty("gpr.key") as String? ?: "TOKEN_NOT_SET"
+            }
+        }
+    }
 }
